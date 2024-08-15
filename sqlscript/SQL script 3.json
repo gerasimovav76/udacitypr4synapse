@@ -2,12 +2,12 @@
 	"name": "SQL script 3",
 	"properties": {
 		"content": {
-			"query": "SELECT TOP (100) [FiscalYear]\n,[AgencyName]\n,[TotalPaid]\n FROM [dbo].[NYC_Payroll_Summary]",
+			"query": "CREATE DATABASE udacity ",
 			"metadata": {
 				"language": "sql"
 			},
 			"currentConnection": {
-				"databaseName": "udacity",
+				"databaseName": "master",
 				"poolName": "Built-in"
 			},
 			"resultLimit": 5000
