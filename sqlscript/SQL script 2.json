@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 2",
+	"properties": {
+		"content": {
+			"query": "CREATE LOGIN [odl_user_266659@udacityhol.onmicrosoft.com]\n    FROM EXTERNAL PROVIDER;\nCREATE USER [odl_user_266659@udacityhol.onmicrosoft.com]\n   FROM LOGIN [odl_user_266659@udacityhol.onmicrosoft.com];\nALTER ROLE db_datareader ADD MEMBER [odl_user_266659@udacityhol.onmicrosoft.com]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "udacity",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
