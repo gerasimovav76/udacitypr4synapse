@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 8",
+	"properties": {
+		"content": {
+			"query": "\n\nALTER ROLE db_datareader ADD MEMBER gavexe;\nGO\n\nGRANT CONTROL TO gavexe\nGO\n\n\nGRANT REFERENCES ON CREDENTIAL::[gavexeMI] to gavexe\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
