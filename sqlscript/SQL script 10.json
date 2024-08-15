@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 10",
+	"properties": {
+		"content": {
+			"query": "-- Create external file format if it doesn't exist\nIF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') \n    CREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] \n    WITH (\n        FORMAT_TYPE = DELIMITEDTEXT,\n        FORMAT_OPTIONS (\n            FIELD_TERMINATOR = ',',\n            FIRST_ROW = 2,\n            USE_TYPE_DEFAULT = FALSE\n        )\n    );\nGO\n\n-- Create master key encryption\nIF NOT EXISTS (SELECT * FROM sys.symmetric_keys WHERE name = '##MS_DatabaseMasterKey##')\n    CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'Gerasimov1982!';\nGO\n\n-- Create database scoped credential if it doesn't exist\nIF NOT EXISTS (SELECT * FROM sys.database_scoped_credentials WHERE name = 'gavexeMI')\n    CREATE DATABASE SCOPED CREDENTIAL [gavexeMI]\n    WITH IDENTITY = 'Managed Identity';\nGO\n\n-- Create external data source if it doesn't exist\nIF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'mydlsfs20230413_mydls20230413_dfs_core_windows_net') \n    CREATE EXTERNAL DATA SOURCE [mydlsfs20230413_mydls20230413_dfs_core_windows_net]\n    WITH (\n        LOCATION = 'abfss://mydlsfs20230413@mydls20230413.dfs.core.windows.net',\n        CREDENTIAL = [gavexeMI]\n    );\nGO\n\n-- Create login and user if they don't exist\nIF NOT EXISTS (SELECT * FROM sys.sql_logins WHERE name = 'gavexe')\nBEGIN\n    CREATE LOGIN gavexe WITH PASSWORD = 'Gerasimov1982!';\n    CREATE USER gavexe FROM LOGIN gavexe;\n    ALTER ROLE db_datareader ADD MEMBER gavexe;\n    GRANT CONTROL TO gavexe;\nEND;\nGO\n\n\nCREATE EXTERNAL TABLE [dbo].[NYC_Payroll_Summary](\n[FiscalYear] [int] NULL,\n[AgencyName] [varchar](50) NULL,\n[TotalPaid] [float] NULL\n)\nWITH (\nLOCATION = '/',\nDATA_SOURCE = [mydlsfs20230413_mydls20230413_dfs_core_windows_net],\nFILE_FORMAT = [SynapseDelimitedTextFormat]\n)\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "udacity",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
