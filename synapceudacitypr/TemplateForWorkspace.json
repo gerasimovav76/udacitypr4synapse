@@ -146,27 +146,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "IF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') \n\tCREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] \n\tWITH ( FORMAT_TYPE = DELIMITEDTEXT ,\n\t       FORMAT_OPTIONS (\n\t\t\t FIELD_TERMINATOR = ',',\n\t\t\t FIRST_ROW = 2,\n\t\t\t USE_TYPE_DEFAULT = FALSE\n\t\t\t))\nGO\n\nCREATE MASTER KEY ENCRYPTION BY PASSWORD = 'Gerasimov1982!'\nGO\n\n\nCREATE DATABASE SCOPED CREDENTIAL [gavexeMI]\nWITH IDENTITY = 'Managed Identity'\nGO\n\n\n\nIF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'mydlsfs20230413_mydls20230413_dfs_core_windows_net') \n\tCREATE EXTERNAL DATA SOURCE [mydlsfs20230413_mydls20230413_dfs_core_windows_net] \n\tWITH (\n\t\tLOCATION = 'abfss://mydlsfs20230413@mydls20230413.dfs.core.windows.net',\n\t\tCREDENTIAL = [gavexeMI]\n\t)\nGO\n\nCREATE LOGIN gavexe with PASSWORD = 'Gerasimov1982!'\nGO\n\nCREATE USER gavexe FROM LOGIN gavexe\nGO\n\nALTER ROLE db_datareader ADD MEMBER gavexe;\nGO\n\nGRANT CONTROL TO gavexe\nGO\n\n\nCREATE EXTERNAL TABLE [dbo].[NYC_Payroll_Summary](\n[FiscalYear] [int] NULL,\n[AgencyName] [varchar](50) NULL,\n[TotalPaid] [float] NULL\n)\nWITH (\nLOCATION = '/',\nDATA_SOURCE = [mydlsfs20230413_mydls20230413_dfs_core_windows_net],\nFILE_FORMAT = [SynapseDelimitedTextFormat]\n)\nGO\n",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "udacity",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 10')]",
+			"name": "[concat(parameters('workspaceName'), '/Additional tests')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
@@ -186,12 +166,12 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 11')]",
+			"name": "[concat(parameters('workspaceName'), '/Create Ext Table')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
 				"content": {
-					"query": "CREATE EXTERNAL TABLE [dbo].[NYC_Payroll_Summary](\n[FiscalYear] [int] NULL,\n[AgencyName] [varchar](50) NULL,\n[TotalPaid] [float] NULL\n)\nWITH (\nLOCATION = '/',\nDATA_SOURCE = [dfs_core_windows_net],\nFILE_FORMAT = [SynapseDelimitedTextFormat]\n)\nGO",
+					"query": "IF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') \nCREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] \nWITH ( FORMAT_TYPE = DELIMITEDTEXT ,\nFORMAT_OPTIONS (\nFIELD_TERMINATOR = ',',\nUSE_TYPE_DEFAULT = FALSE\n))\nGO\n\n    CREATE EXTERNAL DATA SOURCE [dfs_core_windows_net]\n    WITH (\n        LOCATION = 'abfss://adlsnycpayroll-anton-g@adlsnycpayrolantong.dfs.core.windows.net/dirstaging'\n    );\nGO\n\n\nCREATE EXTERNAL TABLE [dbo].[NYC_Payroll_Summary](\n[FiscalYear] [int] NULL,\n[AgencyName] [varchar](50) NULL,\n[TotalPaid] [float] NULL\n)\nWITH (\nLOCATION = '/',\nDATA_SOURCE = [dfs_core_windows_net],\nFILE_FORMAT = [SynapseDelimitedTextFormat]\n)\nGO",
 					"metadata": {
 						"language": "sql"
 					},
@@ -206,27 +186,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 2')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "DROP EXTERNAL TABLE [dbo].[NYC_Payroll_Summary] ",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "udacity",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 3')]",
+			"name": "[concat(parameters('workspaceName'), '/Creation Udacity')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
@@ -246,107 +206,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 4')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "IF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') \n\tCREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] \n\tWITH ( FORMAT_TYPE = DELIMITEDTEXT ,\n\t       FORMAT_OPTIONS (\n\t\t\t FIELD_TERMINATOR = ',',\n\t\t\t FIRST_ROW = 2,\n\t\t\t USE_TYPE_DEFAULT = FALSE\n\t\t\t))\nGO\n\n\nIF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'mydlsfs20230413_mydls20230413_dfs_core_windows_net') \n\tCREATE EXTERNAL DATA SOURCE [mydlsfs20230413_mydls20230413_dfs_core_windows_net] \n\tWITH (\n\t\tLOCATION = 'abfss://mydlsfs20230413@mydls20230413.dfs.core.windows.net',\n\t\tCREDENTIAL = [gavexeMI]\n\t)\nGO\n\n\n\n\nALTER ROLE db_datareader ADD MEMBER gavexe;\nGO\n\nGRANT CONTROL TO gavexe\nGO\n\n\nCREATE EXTERNAL TABLE [dbo].[NYC_Payroll_Summary](\n[FiscalYear] [int] NULL,\n[AgencyName] [varchar](50) NULL,\n[TotalPaid] [float] NULL\n)\nWITH (\nLOCATION = '/',\nDATA_SOURCE = [mydlsfs20230413_mydls20230413_dfs_core_windows_net],\nFILE_FORMAT = [SynapseDelimitedTextFormat]\n)\nGO\n",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "udacity",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 5')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT * \nFROM sys.external_data_sources \nWHERE name = 'mydlsfs20230413_mydls20230413_dfs_core_windows_net';",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "udacity",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 6')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "CREATE DATABASE udacity",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "master",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 7')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT * \nFROM sys.server_principals \nWHERE name = 'gavexe';",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "master",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 8')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "\n\nALTER ROLE db_datareader ADD MEMBER gavexe;\nGO\n\nGRANT CONTROL TO gavexe\nGO\n\n\nGRANT REFERENCES ON CREDENTIAL::[gavexeMI] to gavexe\nGO",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "master",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 9')]",
+			"name": "[concat(parameters('workspaceName'), '/Deletion Udacity')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {
@@ -357,6 +217,26 @@
 					},
 					"currentConnection": {
 						"databaseName": "master",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Testing Ext Table')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) [FiscalYear]\n,[AgencyName]\n,[TotalPaid]\n FROM [dbo].[NYC_Payroll_Summary]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "udacity",
 						"poolName": "Built-in"
 					},
 					"resultLimit": 5000
