@@ -186,6 +186,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 11')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "CREATE EXTERNAL TABLE [dbo].[NYC_Payroll_Summary](\n[FiscalYear] [int] NULL,\n[AgencyName] [varchar](50) NULL,\n[TotalPaid] [float] NULL\n)\nWITH (\nLOCATION = '/',\nDATA_SOURCE = [dfs_core_windows_net],\nFILE_FORMAT = [SynapseDelimitedTextFormat]\n)\nGO",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "udacity",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/SQL script 2')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
