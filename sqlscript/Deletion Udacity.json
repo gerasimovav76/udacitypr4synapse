@@ -1,5 +1,5 @@
 {
-	"name": "SQL script 9",
+	"name": "Deletion Udacity",
 	"properties": {
 		"content": {
 			"query": "DECLARE @killCommand NVARCHAR(MAX) = '';\nDECLARE @databaseName NVARCHAR(128) = 'udacity'; -- Replace with your database name\n\n-- Generate kill commands for all user sessions in the specified database\nSELECT @killCommand = @killCommand + 'KILL ' + CAST(session_id AS VARCHAR(10)) + '; '\nFROM sys.dm_exec_sessions\nWHERE DB_NAME(database_id) = @databaseName\n  AND is_user_process = 1;\n\n-- Execute the kill commands\nEXEC sp_executesql @killCommand;\n\n-- Drop the database\nDROP DATABASE udacity;",

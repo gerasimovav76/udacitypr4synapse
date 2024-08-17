@@ -1,13 +1,13 @@
 {
-	"name": "Creation Udacity",
+	"name": "Testing Ext Table",
 	"properties": {
 		"content": {
-			"query": "CREATE DATABASE udacity ",
+			"query": "SELECT TOP (100) [FiscalYear]\n,[AgencyName]\n,[TotalPaid]\n FROM [dbo].[NYC_Payroll_Summary]",
 			"metadata": {
 				"language": "sql"
 			},
 			"currentConnection": {
-				"databaseName": "master",
+				"databaseName": "udacity",
 				"poolName": "Built-in"
 			},
 			"resultLimit": 5000
